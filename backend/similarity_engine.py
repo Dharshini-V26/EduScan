@@ -17,16 +17,26 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from typing import List, Dict, Tuple
 
-# ── Sentence-Transformers (optional — graceful fallback to TF-IDF only) ────────
-try:
-    from sentence_transformers import SentenceTransformer
-    _SEMANTIC_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
-    SEMANTIC_AVAILABLE = True
-    print("[Semantic] sentence-transformers loaded: all-MiniLM-L6-v2")
-except Exception as _e:
-    SEMANTIC_AVAILABLE = False
-    _SEMANTIC_MODEL = None
-    print(f"[Semantic] sentence-transformers unavailable ({_e}). Falling back to TF-IDF only.")
+# ── Sentence-Transformers (lazy-loaded on first use to avoid startup timeout) ──
+_SEMANTIC_MODEL = None
+SEMANTIC_AVAILABLE = None  # None = not yet checked
+
+def _get_semantic_model():
+    """Load the sentence-transformer model on first use (lazy init)."""
+    global _SEMANTIC_MODEL, SEMANTIC_AVAILABLE
+    if SEMANTIC_AVAILABLE is not None:
+        return _SEMANTIC_MODEL
+    try:
+        from sentence_transformers import SentenceTransformer
+        _SEMANTIC_MODEL = SentenceTransformer('all-MiniLM-L6-v2')
+        SEMANTIC_AVAILABLE = True
+        print("[Semantic] sentence-transformers loaded: all-MiniLM-L6-v2")
+    except Exception as _e:
+        SEMANTIC_AVAILABLE = False
+        _SEMANTIC_MODEL = None
+        print(f"[Semantic] Unavailable ({_e}). Falling back to TF-IDF only.")
+    return _SEMANTIC_MODEL
+
 
 
 # ── PRIVATE HELPERS ───────────────────────────────────────────────────────────
@@ -59,7 +69,8 @@ def _tfidf_similarity(processed_texts: List[str]) -> Tuple[np.ndarray, dict]:
 
 def _semantic_similarity(raw_texts: List[str]) -> np.ndarray:
     """Embed texts with sentence-transformers and return cosine similarity matrix."""
-    embeddings = _SEMANTIC_MODEL.encode(raw_texts, convert_to_numpy=True, show_progress_bar=False)
+    model = _get_semantic_model()
+    embeddings = model.encode(raw_texts, convert_to_numpy=True, show_progress_bar=False)
     norms      = np.linalg.norm(embeddings, axis=1, keepdims=True)
     norms      = np.where(norms == 0, 1e-10, norms)   # avoid div-by-zero
     normalised = embeddings / norms
@@ -95,7 +106,7 @@ def compute_similarity_matrix(
 
     tfidf_sim, info = _tfidf_similarity(processed_texts)
 
-    if SEMANTIC_AVAILABLE:
+    if _get_semantic_model() is not None:
         semantic_input = raw_texts if raw_texts else processed_texts
         try:
             sem_sim    = _semantic_similarity(semantic_input)
