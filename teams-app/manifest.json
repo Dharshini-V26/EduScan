@@ -6,9 +6,9 @@
   "packageName": "com.eduscan.ai",
   "developer": {
     "name": "EduScan",
-    "websiteUrl": "https://YOUR-FRONTEND.vercel.app",
-    "privacyUrl": "https://YOUR-FRONTEND.vercel.app",
-    "termsOfUseUrl": "https://YOUR-FRONTEND.vercel.app"
+    "websiteUrl": "https://edu-scan-two.vercel.app",
+    "privacyUrl": "https://edu-scan-two.vercel.app",
+    "termsOfUseUrl": "https://edu-scan-two.vercel.app"
   },
   "name": {
     "short": "EduScan",
@@ -16,7 +16,7 @@
   },
   "description": {
     "short": "Detect assignment similarity using AI",
-    "full": "Upload student assignments and detect plagiarism using TF-IDF and Cosine Similarity. Each teacher has their own private account. View groups, matrix, heatmap and download reports — all inside Teams."
+    "full": "Upload student assignments and detect plagiarism using TF-IDF and Semantic AI. Each teacher has their own private account. View groups, matrix, heatmap and download reports — all inside Teams."
   },
   "icons": {
     "color": "color.png",
@@ -27,14 +27,14 @@
     {
       "entityId": "eduscan-main",
       "name": "EduScan",
-      "contentUrl": "https://YOUR-FRONTEND.vercel.app",
-      "websiteUrl": "https://YOUR-FRONTEND.vercel.app",
+      "contentUrl": "https://edu-scan-two.vercel.app",
+      "websiteUrl": "https://edu-scan-two.vercel.app",
       "scopes": ["personal"]
     }
   ],
   "permissions": ["identity"],
   "validDomains": [
-    "YOUR-FRONTEND.vercel.app",
-    "YOUR-BACKEND.onrender.com"
+    "edu-scan-two.vercel.app",
+    "eduscan-backend-n3x9.onrender.com"
   ]
-}
+}
