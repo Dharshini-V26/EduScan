@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "e2ba8c89-8d13-40e9-b5f7-640b79fece51",
+  "packageName": "com.eduscan.ai",
+  "developer": {
+    "name": "EduScan",
+    "websiteUrl": "https://YOUR-FRONTEND.vercel.app",
+    "privacyUrl": "https://YOUR-FRONTEND.vercel.app",
+    "termsOfUseUrl": "https://YOUR-FRONTEND.vercel.app"
+  },
+  "name": {
+    "short": "EduScan",
+    "full": "EduScan - Assignment Similarity Detection"
+  },
+  "description": {
+    "short": "Detect assignment similarity using AI",
+    "full": "Upload student assignments and detect plagiarism using TF-IDF and Cosine Similarity. Each teacher has their own private account. View groups, matrix, heatmap and download reports — all inside Teams."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#3B82F6",
+  "staticTabs": [
+    {
+      "entityId": "eduscan-main",
+      "name": "EduScan",
+      "contentUrl": "https://YOUR-FRONTEND.vercel.app",
+      "websiteUrl": "https://YOUR-FRONTEND.vercel.app",
+      "scopes": ["personal"]
+    }
+  ],
+  "permissions": ["identity"],
+  "validDomains": [
+    "YOUR-FRONTEND.vercel.app",
+    "YOUR-BACKEND.onrender.com"
+  ]
+}

@@ -1,0 +1,12 @@
+flask
+flask-cors
+PyJWT
+scikit-learn
+nltk
+numpy
+python-docx
+pdfminer.six
+pypdf
+sentence-transformers
+google-generativeai
+python-dotenv
