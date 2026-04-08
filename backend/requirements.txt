@@ -9,3 +9,4 @@ pdfminer.six
 pypdf
 google-generativeai
 python-dotenv
+gunicorn
