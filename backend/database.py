@@ -150,7 +150,9 @@ def list_sessions(teacher_id):
             LEFT JOIN assignments a ON a.session_id=s.id
             LEFT JOIN analysis_results ar ON ar.session_id=s.id
             WHERE s.teacher_id=?
-            GROUP BY s.id ORDER BY s.id DESC
+            GROUP BY s.id
+            HAVING s.is_active = 1 OR assignment_count > 0
+            ORDER BY s.id DESC
         ''', (teacher_id,)).fetchall()
     return [dict(r) for r in rows]
 
