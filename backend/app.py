@@ -202,6 +202,10 @@ def me():
 # HEALTH
 # ══════════════════════════════════════════════════════════════════════════════
 
+@app.route('/', methods=['GET', 'HEAD'])
+def index():
+    return _ok({"status": "ok", "message": "EduScan API Root"})
+
 @app.route('/health', methods=['GET'])
 def health():
     return _ok({"status": "ok", "message": "EduScan running"})
