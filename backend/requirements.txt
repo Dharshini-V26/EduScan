@@ -7,6 +7,5 @@ numpy
 python-docx
 pdfminer.six
 pypdf
-sentence-transformers
 google-generativeai
 python-dotenv
