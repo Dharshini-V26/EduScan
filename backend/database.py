@@ -149,11 +149,10 @@ def list_sessions(teacher_id):
             FROM sessions s
             LEFT JOIN assignments a ON a.session_id=s.id
             LEFT JOIN analysis_results ar ON ar.session_id=s.id
-            WHERE s.teacher_id=?
             GROUP BY s.id
             HAVING s.is_active = 1 OR assignment_count > 0
             ORDER BY s.id DESC
-        ''', (teacher_id,)).fetchall()
+        ''').fetchall()
     return [dict(r) for r in rows]
 
 # ── ASSIGNMENTS ───────────────────────────────────────────────────────────────
@@ -180,8 +179,8 @@ def get_active_assignments(teacher_id):
 def get_assignments_for_session(session_id, teacher_id):
     with _conn() as db:
         rows = db.execute(
-            'SELECT id,student_name,file_name,char_count,word_count,upload_date FROM assignments WHERE session_id=? AND teacher_id=? ORDER BY id',
-            (session_id, teacher_id)
+            'SELECT id,student_name,file_name,char_count,word_count,upload_date FROM assignments WHERE session_id=? ORDER BY id',
+            (session_id,)
         ).fetchall()
     return [dict(r) for r in rows]
 
@@ -237,8 +236,8 @@ def get_active_result(teacher_id):
 def get_result_for_session(session_id, teacher_id):
     with _conn() as db:
         row = db.execute(
-            'SELECT * FROM analysis_results WHERE session_id=? AND teacher_id=? ORDER BY id DESC LIMIT 1',
-            (session_id, teacher_id)
+            'SELECT * FROM analysis_results WHERE session_id=? ORDER BY id DESC LIMIT 1',
+            (session_id,)
         ).fetchone()
     if not row:
         return None
